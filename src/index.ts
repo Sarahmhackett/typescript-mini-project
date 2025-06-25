@@ -19,6 +19,10 @@ function readToDos(): Todo[] {
   return JSON.parse(todosJSON);
 }
 
+function saveToDos() {
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   // in memory
@@ -30,6 +34,8 @@ form.addEventListener("submit", function (e) {
   todos.push(newToDo);
 
   localStorage.setItem("todos", JSON.stringify(todos)); // needs to be a string
+
+  saveToDos();
   input.value = "";
 });
 
@@ -38,6 +44,13 @@ function createToDo(todo: Todo) {
   const newLi = document.createElement("li");
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
+  checkbox.checked = todo.completed;
+
+  checkbox.addEventListener("change", () => {
+    todo.completed = checkbox.checked;
+    saveToDos();
+  });
+
   newLi.append(todo.text);
   newLi.append(checkbox);
   list.append(newLi);
