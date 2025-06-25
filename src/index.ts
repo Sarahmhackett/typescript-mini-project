@@ -1,39 +1,42 @@
+// structure of a to-do list item
 interface Todo {
   text: string;
   completed: boolean;
 }
 
-const btn = document.getElementById("btn");
+// grabbing DOM elements
 const form = document.getElementById("todoform") as HTMLFormElement;
 const input = document.getElementById("todoinput") as HTMLInputElement;
 const list = document.getElementById("todo-list") as HTMLUListElement;
 
+// reading existing todos from local storage
 const todos: Todo[] = readToDos();
 
+// for each to do, create a new to do list item
 todos.forEach(createToDo);
 
+// reading todos from local storage
 function readToDos(): Todo[] {
   // should return type Todo interface
   const todosJSON = localStorage.getItem("todos");
   if (todosJSON === null) return [];
   return JSON.parse(todosJSON);
 }
-
+// saves to local storage
 function saveToDos() {
   localStorage.setItem("todos", JSON.stringify(todos));
 }
-
+// when the form is submitted, create a new to do list item in memory
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  // in memory
+
   const newToDo: Todo = {
     text: input.value,
     completed: false,
   };
+  // add it to the DOM by calling functions
   createToDo(newToDo);
   todos.push(newToDo);
-
-  localStorage.setItem("todos", JSON.stringify(todos)); // needs to be a string
 
   saveToDos();
   input.value = "";
