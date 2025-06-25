@@ -19,10 +19,6 @@ pnpm-debug.log*
 .env.local
 .env.*.local
 
-# IDE and editor folders
-.vscode/
-.idea/
-
 # OS-specific
 .DS_Store
 Thumbs.db
